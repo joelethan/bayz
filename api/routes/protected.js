@@ -24,7 +24,7 @@ router.get('/patch', checkAuth, (req, res, next) => {
     });
 });
 
-router.post('/patch', (req, res, next) => {
+router.post('/patch', checkAuth, (req, res, next) => {
     var operation = {
         patch: req.body.patch
     };
@@ -47,7 +47,7 @@ router.post('/patch', (req, res, next) => {
 
 });
 
-router.post('/z', (req, res, next) => {
+router.post('/image', checkAuth, (req, res, next) => {
     const operation = {
         url: req.body.url,
         dest: req.body.dest 
