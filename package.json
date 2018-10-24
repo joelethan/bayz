@@ -1,0 +1,30 @@
+{
+  "name": "hackerbay-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "Joel Katusiime",
+  "license": "ISC",
+  "dependencies": {
+    "app-root-dir": "^1.0.2",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.2",
+    "file-exists": "^5.0.1",
+    "image-downloader": "^3.4.1",
+    "json-patch": "^0.7.0",
+    "jsonwebtoken": "^8.3.0",
+    "mocha": "^5.2.0",
+    "morgan": "^1.9.0",
+    "node-thumbnail": "^0.14.0",
+    "url-exists": "^1.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1",
+    "supertest": "^3.3.0"
+  }
+}
