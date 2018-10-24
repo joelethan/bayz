@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const  urlExists = require('url-exists');
 const fileExists = require('file-exists');
+const delay = require('delay');
 
 const root = require('app-root-dir').get();
 appRootDir = root.split("\\").join("/")
@@ -56,25 +57,44 @@ router.post('/z', (req, res, next) => {
     urlExists(operation.url, function(err, exists) {
         if(exists){
 
-            methods.data.imageDownload(operation)
-            methods.data.thumbnailCreator(operation)
-            message = message +' Image Created'
-            res.status(200).json({
-                message: message
-            });
+            img = operation.url.split('.').pop()
+            if(img=='jpg'||img=='png'||img=='jpeg'){
+
+                (async () => {
+                    methods.data.imageDownload(operation)
+                    await delay(3000);
+                    methods.data.thumbnailCreator(operation)
+                })();
+
+                message = message +' Image downloaded, Thumbnail created'
+                res.status(201).json({
+                    message: message
+                });
+                console.log('true')
+
+            }else{
+
+                console.log('false')
+                res.status(500).json({
+                    message: 'url has no image!!!!'
+                });
+
+            }
+
+
 
         }else{
             message = message + ' url broken,'
             fileExists(appRootDir+'/api/uploads/'+operation.dest+'.jpg').then(exists => {
                 if(exists){
                     methods.data.thumbnailCreator(operation)
-                    message = message + ' Thumbnail created,'
-                    res.status(200).json({
+                    message = message + ' Thumbnail created'
+                    res.status(201).json({
                         message: message
                     });
                 }else{
                     message = message + ' No image found'
-                    res.status(200).json({
+                    res.status(404).json({
                         message: message
                     });
                 }
@@ -84,6 +104,5 @@ router.post('/z', (req, res, next) => {
 
     });
 });
-
 
 module.exports = router;
