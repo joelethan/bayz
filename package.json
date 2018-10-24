@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "nyc --reporter=text mocha",
     "start": "nodemon server.js"
   },
   "keywords": [],
@@ -13,6 +13,7 @@
   "dependencies": {
     "app-root-dir": "^1.0.2",
     "body-parser": "^1.18.3",
+    "delay": "^4.1.0",
     "express": "^4.16.2",
     "file-exists": "^5.0.1",
     "image-downloader": "^3.4.1",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "nodemon": "^1.12.1",
+    "nyc": "^13.1.0",
     "supertest": "^3.3.0"
   }
 }

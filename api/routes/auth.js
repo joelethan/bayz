@@ -11,12 +11,13 @@ router.post('/login', (req, res, next) => {
         res.status(500).json({
             message: 'Invalid User Credentials'
         });
+    }else{
+        res.status(200).json({
+            message: 'User successful logged in',
+            token: methods.data.tokenGen(user)
+        });
     }
 
-    res.status(200).json({
-        message: 'User successful logged in',
-        token: methods.data.tokenGen(user)
-    });
 });
 
 module.exports = router;

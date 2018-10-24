@@ -11,7 +11,6 @@ var methods = {}
 
 
 methods.patchFunc = function (doc,body){
-    // if (!body || !body.patch || !doc) return false
     return jsonpatch.apply(doc, body.patch);
 }
 
