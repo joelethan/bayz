@@ -14,7 +14,6 @@ A simple stateless microservice built in Nodejs, with three major functionalitie
 - Install Node js
 - Clone to the repository: `https://github.com/joelethan/hackerbay-app-backend`
 - Change directory into the root of the project: `cd hackerbay-app-backend`
-- Checkout the develop branch: `git checkout develop`
 - Install project dependencies: Run `npm install`
 - Start the microservice: `npm start`
 
