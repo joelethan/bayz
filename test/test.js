@@ -57,7 +57,7 @@ describe('POST patch', function() {
     request (app)
       .post('/protected/patch')
       .send(patch)
-      .set('Accept', 'application/json')
+      .set({'Accept': 'application/json','Authorization':'Bearer '+token})
       .expect('Content-Type', /json/)
       .expect(200, done)
   });
@@ -88,9 +88,9 @@ describe('Broken url with no image in files', function() {
 
     var body={"url": "https://www.somebrokenusrl.com","dest": "imadgez"}
     request (app)
-      .post('/protected/z')
+      .post('/protected/image')
       .send(body)
-      .set('Accept', 'application/json')
+      .set({'Accept': 'application/json','Authorization':'Bearer '+token})
       .expect('Content-Type', /json/)
       .expect(404, done)
   });
@@ -101,9 +101,9 @@ describe('Broken url with image in files', function() {
 
     var body={"url": "https://www.somebrokenusrl.com","dest": "image"}
     request (app)
-      .post('/protected/z')
+      .post('/protected/image')
       .send(body)
-      .set('Accept', 'application/json')
+      .set({'Accept': 'application/json','Authorization':'Bearer '+token})
       .expect('Content-Type', /json/)
       .expect(201, done)
   });
@@ -119,9 +119,9 @@ describe('Url with no image in it', function() {
 
     var body={"url": "https://www.google.com","dest": "imadgez"}
     request (app)
-      .post('/protected/z')
+      .post('/protected/image')
       .send(body)
-      .set('Accept', 'application/json')
+      .set({'Accept': 'application/json','Authorization':'Bearer '+token})
       .expect('Content-Type', /json/)
       .expect(500, done)
   });
