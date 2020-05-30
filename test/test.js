@@ -57,7 +57,7 @@ describe('POST patch', function() {
     request (app)
       .post('/protected/patch')
       .send(patch)
-      .set({'Accept': 'application/json','Authorization':'Bearer '+token})
+      .set({'Accept': 'application/json','Authorization':token})
       .expect('Content-Type', /json/)
       .expect(200, done)
   });
@@ -77,7 +77,7 @@ describe('GET patch with user loggedin', function() {
   it('should throw an Unauthorized error', function(done) {
     request(app)
       .get('/protected/patch')
-      .set({'Accept': 'application/json','Authorization':'Bearer '+token})
+      .set({'Accept': 'application/json','Authorization':token})
       .expect('Content-Type', /json/)
       .expect(200, done)
   });
@@ -86,11 +86,11 @@ describe('GET patch with user loggedin', function() {
 describe('Broken url with no image in files', function() {
   it('should throw a Not Found error', function(done) {
 
-    var body={"url": "https://www.somebrokenusrl.com","dest": "imadgez"}
+    var body={"url": "https://www.somebrokenusrl.com","imageName": "imadgez"}
     request (app)
       .post('/protected/image')
       .send(body)
-      .set({'Accept': 'application/json','Authorization':'Bearer '+token})
+      .set({'Accept': 'application/json','Authorization':token})
       .expect('Content-Type', /json/)
       .expect(404, done)
   });
@@ -99,11 +99,11 @@ describe('Broken url with no image in files', function() {
 describe('Broken url with image in files', function() {
   it('should throw a Not Found error', function(done) {
 
-    var body={"url": "https://www.somebrokenusrl.com","dest": "image"}
+    var body={"url": "https://www.somebrokenusrl.com","imageName": "image"}
     request (app)
       .post('/protected/image')
       .send(body)
-      .set({'Accept': 'application/json','Authorization':'Bearer '+token})
+      .set({'Accept': 'application/json','Authorization':token})
       .expect('Content-Type', /json/)
       .expect(201, done)
   });
@@ -117,11 +117,11 @@ describe('Url with no image in it', function() {
   this.timeout(3000)
   it('should throw an Internal Server error', function(done) {
 
-    var body={"url": "https://www.google.com","dest": "imadgez"}
+    var body={"url": "https://www.google.com","imageName": "imadgez"}
     request (app)
       .post('/protected/image')
       .send(body)
-      .set({'Accept': 'application/json','Authorization':'Bearer '+token})
+      .set({'Accept': 'application/json','Authorization':token})
       .expect('Content-Type', /json/)
       .expect(500, done)
   });

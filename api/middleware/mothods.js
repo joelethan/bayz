@@ -1,31 +1,31 @@
-const thumb = require('node-thumbnail').thumb;
-const jsonpatch = require('json-patch');
-const downloader = require('image-downloader')
-const jwt = require('jsonwebtoken');
+import { thumb } from "node-thumbnail";
+import { apply } from "json-patch";
+import { image } from "image-downloader";
+import { sign } from "jsonwebtoken";
 
 const JWT_KEY = 'secret'
 
-const root = require('app-root-dir').get();
-appRootDir = root.split("\\").join("/")
-var methods = {}
+const appRoot = process.cwd().split("\\").join("/")
+
+const methods = {}
 
 
-methods.patchFunc = function (doc,body){
-    return jsonpatch.apply(doc, body.patch);
+methods.patchFunc = function (doc, patch){
+    return apply(doc, patch);
 }
 
 //image  Downloader
-methods.imageDownload = function(body){
-    options = {
-        url: body.url,
-        dest: appRootDir+'/api/uploads/'+body.dest+'.jpg'
+methods.imageDownload = function(url, name){
+    const options = {
+        url: url,
+        dest: appRoot+'/api/uploads/'+name+'.jpg'
     }
-    downloader.image(options)
+    image(options)
 }
 
-methods.thumbnailCreator = function (body){
-    var src = appRootDir+'/api/uploads/'+body.dest+'.jpg';
-    var dest = appRootDir+'/api/thumbnails';
+methods.thumbnailCreator = function (name){
+    const src = appRoot +'/api/uploads/'+name+'.jpg';
+    const dest = appRoot +'/api/thumbnails';
 
     thumb({
         source: src,
@@ -37,7 +37,7 @@ methods.thumbnailCreator = function (body){
 
 methods.tokenGen = function (body){
     
-    const token = jwt.sign(
+    const token = sign(
         {
           email: body.email
         },
