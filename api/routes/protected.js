@@ -1,18 +1,17 @@
-const express = require('express');
-const router = express.Router();
-const  urlExists = require('url-exists');
-const fileExists = require('file-exists');
-const delay = require('delay');
+import { Router } from "express";
+import urlExists from "url-exists";
+import fileExists from "file-exists";
+import delay from "delay";
 
-const root = require('app-root-dir').get();
-appRootDir = root.split("\\").join("/")
+const appRoot = process.cwd().split("\\").join("/")
 
 const checkAuth = require('../middleware/check-auth');
-var methods = require('../middleware/mothods')
+const methods = require('../middleware/mothods')
 
 
 // Document
 var myobj = {};
+const router = Router();
 
 
 // API
@@ -25,58 +24,50 @@ router.get('/patch', checkAuth, (req, res, next) => {
 });
 
 router.post('/patch', checkAuth, (req, res, next) => {
-    var operation = {
-        patch: req.body.patch
-    };
-     
-    if (!operation || !operation.patch || !myobj){
+    const patch = req.body.patch;
+    myobj = req.body.myobj;
+    
+    if (!patch || !myobj){
         res.status(500).json({
             message: 'patch or body or doc not found!!'
         });
-    }else if((operation.patch).length==0){
+    } else if ((patch).length==0){
         res.status(500).json({
             message: 'patch can not be empty!!'
         });
-    }else{
-        methods.data.patchFunc(myobj,operation)
+    } else {
+        methods.data.patchFunc(myobj, patch)
         res.status(200).json({
             message: 'POST requests to /protected/patch',
             patch: myobj
         });
     }
-
 });
 
 router.post('/image', checkAuth, (req, res, next) => {
-    const operation = {
-        url: req.body.url,
-        dest: req.body.dest 
-    };
+    const url= req.body.url
+    const imageName = req.body.imageName || 'imagename'
     var message = ''
 
-    urlExists(operation.url, function(err, exists) {
+    urlExists(url, function(err, exists) {
         if(exists){
 
-            img = operation.url.split('.').pop()
-            if(img=='jpg'||img=='png'||img=='jpeg'){
-
-                (async () => {
-                    methods.data.imageDownload(operation)
-                    await delay(3000);
-                    methods.data.thumbnailCreator(operation)
-                })();
-
-                message = message +' Image downloaded, Thumbnail created'
-                res.status(201).json({
-                    message: message
+            const imgExt = url.split('.').pop()
+            if (['img','png', 'jpg'].indexOf(imgExt) === -1) {
+                res.status(500).json({
+                    message: 'url has no image!!!! '
                 });
-                console.log('true')
 
             }else{
+                (async () => {
+                    methods.data.imageDownload(url, imageName)
+                    await delay(3000);
+                    methods.data.thumbnailCreator(imageName)
+                })();
 
-                console.log('false')
-                res.status(500).json({
-                    message: 'url has no image!!!!'
+                message = message +'Image downloaded, Thumbnail created '
+                res.status(201).json({
+                    message: message
                 });
 
             }
@@ -84,16 +75,16 @@ router.post('/image', checkAuth, (req, res, next) => {
 
 
         }else{
-            message = message + ' url broken,'
-            fileExists(appRootDir+'/api/uploads/'+operation.dest+'.jpg').then(exists => {
+            message = message + 'url broken, '
+            fileExists(appRoot+'/api/uploads/'+imageName+'.jpg').then(exists => {
                 if(exists){
-                    methods.data.thumbnailCreator(operation)
-                    message = message + ' Thumbnail created'
+                    methods.data.thumbnailCreator(imageName)
+                    message = message + 'Thumbnail created '
                     res.status(201).json({
                         message: message
                     });
                 }else{
-                    message = message + ' No image found'
+                    message = message + 'No image found '
                     res.status(404).json({
                         message: message
                     });

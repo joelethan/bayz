@@ -4,29 +4,29 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nyc --reporter=text mocha",
-    "start": "nodemon server.js"
+    "test": "set NODE_ENV=test && mocha --require esm test/*.js --exit",
+    "start": "nodemon -r esm app.js"
   },
   "keywords": [],
   "author": "Joel Katusiime",
   "license": "ISC",
   "dependencies": {
-    "app-root-dir": "^1.0.2",
-    "body-parser": "^1.18.3",
-    "delay": "^4.1.0",
-    "express": "^4.16.2",
+    "body-parser": "^1.19.0",
+    "delay": "^4.3.0",
+    "express": "^4.17.1",
     "file-exists": "^5.0.1",
-    "image-downloader": "^3.4.1",
+    "image-downloader": "^3.6.0",
     "json-patch": "^0.7.0",
-    "jsonwebtoken": "^8.3.0",
-    "mocha": "^5.2.0",
-    "morgan": "^1.9.0",
+    "jsonwebtoken": "^8.5.1",
     "node-thumbnail": "^0.14.0",
     "url-exists": "^1.0.3"
   },
   "devDependencies": {
-    "nodemon": "^1.12.1",
-    "nyc": "^13.1.0",
-    "supertest": "^3.3.0"
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "esm": "^3.2.25",
+    "mocha": "^7.2.0",
+    "nodemon": "^2.0.0",
+    "nyc": "^15.0.1"
   }
 }

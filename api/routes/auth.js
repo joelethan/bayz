@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-var methods = require('../middleware/mothods')
+const methods = require('../middleware/mothods')
 
 router.post('/login', (req, res, next) => {
-    var user = {
+    const user = {
         email: req.body.email,
         password: req.body.password
     };
