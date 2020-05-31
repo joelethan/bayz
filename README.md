@@ -1,4 +1,5 @@
-# Hackerbay backend assignment
+# Hackerbay backend assignment 
+[![Build Status](https://travis-ci.org/joelethan/hackerbay-app-backend.svg?branch=master)](https://travis-ci.org/joelethan/hackerbay-app-backend)
 
 A simple stateless microservice built in Nodejs, with three major functionalities,
 - Authentication
