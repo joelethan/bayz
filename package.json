@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nyc --reporter=text mocha",
+    "test": "set NODE_ENV=test && mocha --require esm test/*.js --exit",
     "start": "nodemon -r esm app.js"
   },
   "keywords": [],
@@ -18,15 +18,15 @@
     "image-downloader": "^3.6.0",
     "json-patch": "^0.7.0",
     "jsonwebtoken": "^8.5.1",
-    "mocha": "^7.1.2",
-    "morgan": "^1.10.0",
     "node-thumbnail": "^0.14.0",
     "url-exists": "^1.0.3"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "esm": "^3.2.25",
+    "mocha": "^7.2.0",
     "nodemon": "^2.0.0",
-    "nyc": "^15.0.1",
-    "supertest": "^3.4.2"
+    "nyc": "^15.0.1"
   }
 }

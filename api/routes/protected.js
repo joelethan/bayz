@@ -55,7 +55,7 @@ router.post('/image', checkAuth, (req, res, next) => {
             const imgExt = url.split('.').pop()
             if (['img','png', 'jpg'].indexOf(imgExt) === -1) {
                 res.status(500).json({
-                    message: 'url has no image!!!!'
+                    message: 'url has no image!!!! '
                 });
 
             }else{
@@ -65,7 +65,7 @@ router.post('/image', checkAuth, (req, res, next) => {
                     methods.data.thumbnailCreator(imageName)
                 })();
 
-                message = message +' Image downloaded, Thumbnail created'
+                message = message +'Image downloaded, Thumbnail created '
                 res.status(201).json({
                     message: message
                 });
@@ -75,16 +75,16 @@ router.post('/image', checkAuth, (req, res, next) => {
 
 
         }else{
-            message = message + ' url broken,'
-            fileExists(appRoot+'/api/uploads/'+operation.dest+'.jpg').then(exists => {
+            message = message + 'url broken, '
+            fileExists(appRoot+'/api/uploads/'+imageName+'.jpg').then(exists => {
                 if(exists){
                     methods.data.thumbnailCreator(imageName)
-                    message = message + ' Thumbnail created'
+                    message = message + 'Thumbnail created '
                     res.status(201).json({
                         message: message
                     });
                 }else{
-                    message = message + ' No image found'
+                    message = message + 'No image found '
                     res.status(404).json({
                         message: message
                     });
